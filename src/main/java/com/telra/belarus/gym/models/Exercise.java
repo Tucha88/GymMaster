@@ -1,12 +1,14 @@
 package com.telra.belarus.gym.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 
 /**
  * Created by Boris on 12.06.2017.
  */
+@Document(collection = "exercise")
 public class Exercise {
     private static final long serialVersionUID = -123456781L;
 

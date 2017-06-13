@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -24,6 +25,7 @@ public class Client implements Serializable {
     private String gender;
     private Date regDate;
     private String gymId;
+    private ArrayList<Exercise> personalExercises = new ArrayList<>();
 
     public Client() {
     }
@@ -41,6 +43,7 @@ public class Client implements Serializable {
         this.gymId = gymId;
     }
 
+
     public String getClientId() {
 
         return clientId;
@@ -48,6 +51,18 @@ public class Client implements Serializable {
 
     public void setClientId(String clientId) {
         this.clientId = clientId;
+    }
+
+    public void addExercise(Exercise exercise) {
+        this.personalExercises.add(exercise);
+    }
+
+    public ArrayList<Exercise> getPersonalExercises() {
+        return personalExercises;
+    }
+
+    public void setPersonalExercises(ArrayList<Exercise> personalExercises) {
+        this.personalExercises = personalExercises;
     }
 
     public String getClientEmail() {

@@ -37,10 +37,14 @@ public class RegistrationController {
             return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT); // Found same login
         }
         Gym gym = gymRepository.findGymByGymId(client.getGymId());
-//        gym.addClient(client.getClientId());
-        String str = utils.hashPassword(client.getClientPassword());
-        client.setClientPassword(str);
+        if (gym == null){
+            return new ResponseEntity<Object>("Error",HttpStatus.CONFLICT);
+        }
+//        String str = utils.hashPassword(client.getClientPassword());
+//        client.setClientPassword(str);
         clientRepository.save(client);
+        gym.addClient(client.getClientId());
+        gymRepository.save(gym);
         Token token = new Token();
         token.setToken(utils.getToken(client.getClientEmail(), client.getClientId()));
 

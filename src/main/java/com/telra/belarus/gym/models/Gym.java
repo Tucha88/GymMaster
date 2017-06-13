@@ -1,6 +1,7 @@
 package com.telra.belarus.gym.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by Boris on 12.06.2017.
  */
+@Document(collection = "gym")
 public class Gym implements Serializable {
     private static final long serialVersionUID = -123456780L;
 
@@ -20,7 +22,7 @@ public class Gym implements Serializable {
     private String gymDescription;
     private String startWorkTime;
     private String endWorkTime;
-    private ArrayList<String> clientIds;
+    private ArrayList<String> clientIds = new ArrayList<>();
 
     public Gym() {
     }
@@ -113,5 +115,19 @@ public class Gym implements Serializable {
 
     public void setGymPassword(String gymPassword) {
         this.gymPassword = gymPassword;
+    }
+
+
+
+    public static Gym newInstance() {
+
+        Gym gym = new Gym();
+        gym.setGymPassword("1");
+        gym.setGymAddress("Ashkelon Bar Kochva 10, Israel");
+        gym.setEndWorkTime("01:00");
+        gym.setGymDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt");
+        gym.setGymLogin("gymTest");
+        gym.setStartWorkTime("05:00");
+        return gym;
     }
 }
