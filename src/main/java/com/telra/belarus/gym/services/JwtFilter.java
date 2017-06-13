@@ -1,0 +1,52 @@
+package com.telra.belarus.gym.services;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureException;
+import org.springframework.web.filter.GenericFilterBean;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * Created by Boris on 06.04.2017.
+ *Класс для проверки наличия в хедере токена
+ */
+//TODO разобраться как улучить методы с токенами
+public class JwtFilter extends GenericFilterBean {
+    public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain)
+            throws IOException, ServletException {
+
+        final HttpServletRequest request = (HttpServletRequest) req;
+        final HttpServletResponse response = (HttpServletResponse) res;
+        final String authHeader = request.getHeader("Authorization");
+
+        /**тест Лим push*/
+        if ("OPTIONS".equals(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+
+            chain.doFilter(req, res);
+        } else {
+
+            if (authHeader == null /*|| !authHeader.startsWith("Bearer ")*/) {
+                throw new ServletException("Missing or invalid Authorization header");
+            }
+
+            final String token = authHeader;
+
+            try {
+                final Claims claims = Jwts.parser().setSigningKey("hello_world_this_is_The_secrete_12w23e2w").parseClaimsJws(token).getBody();
+                request.setAttribute("claims", claims);
+            } catch (final SignatureException e) {
+                throw new ServletException("Invalid token");
+            }
+
+            chain.doFilter(req, res);
+        }
+    }
+}
