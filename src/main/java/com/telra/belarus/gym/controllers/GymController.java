@@ -12,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Boris on 12.06.2017.
  */
@@ -32,22 +36,32 @@ public class GymController {
     }
 
     @PostMapping("addExercise")
-    public ResponseEntity<Object> addExerciseToClient(@RequestBody AddExerciseToClient add){
+    public ResponseEntity<Object> addExerciseToClient(@RequestParam("id") String gymId,@RequestBody AddExerciseToClient add){
+       String s = gymId;
         Client client = clientRepository.findOne(add.getClientId());
+
+        if (!client.getGymId().equals(gymId)){
+            return new ResponseEntity<Object>("this is not your client",HttpStatus.CONFLICT);
+        }
+        if (client == null){
+            return new ResponseEntity<>("Client not found",HttpStatus.CONFLICT);
+        }
         client.addExercise(add.getExercise());
         clientRepository.save(client);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("getGym")
-    public ResponseEntity<Object> get(){
-        Gym gym = new Gym().newInstance();
-        gymRepository.save(gym);
-
+    public ResponseEntity<Object> get(@RequestHeader("Id") String token,@RequestParam("id") String id){
+        Gym gym = gymRepository.findOne(id);
+        if(gym == null){
+            return new ResponseEntity<Object>("Gym not found",HttpStatus.CONFLICT);
+        }
         return new ResponseEntity<>(gym,HttpStatus.OK);
     }
 
-    @GetMapping("getExers")
+/*
+    @GetMapping("getexers")
     public ResponseEntity<Object> getExers(){
         Exercise exercise = new Exercise();
         exercise.setCategoryName("back");
@@ -59,10 +73,25 @@ public class GymController {
         addExerciseToClient.setClientId("594044193dd0cb2bf81c04f5");
         return new ResponseEntity<Object>(addExerciseToClient,HttpStatus.OK);
     }
+*/
 
     @GetMapping("getallclients")
-    public ResponseEntity<Object> getAllClients(){
-        return new ResponseEntity<Object>(clientRepository.findAll(),HttpStatus.OK);
+    public ResponseEntity<Object> getAllClients(@RequestParam("id")String id){
+        Gym gym = gymRepository.findOne(id);
+        if (gym == null){
+            return new ResponseEntity<>("Gym not found, register please",HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(gym.getClients(),HttpStatus.OK);
+    }
+
+    @GetMapping("getallgyms")
+    public ResponseEntity<Object> getAllGyms(){
+        ArrayList<Gym> gyms = (ArrayList) gymRepository.findAll();
+        List<String > strings = new ArrayList<>();
+        for (int i = 0; i < gyms.size(); i++) {
+            strings.add(gyms.get(i).getGymId());
+        }
+        return new ResponseEntity<Object>(strings,HttpStatus.OK);
     }
 
 }

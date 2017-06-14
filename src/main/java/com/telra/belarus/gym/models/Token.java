@@ -6,12 +6,13 @@ package com.telra.belarus.gym.models;
 public class Token {
     private String token;
     private String state;
+    private String id;
 
     public Token() {
     }
 
-    public Token(String token, String state) {
-
+    public Token(String token, String state,String id) {
+        this.id = id;
         this.token = token;
         this.state = state;
     }
@@ -31,5 +32,13 @@ public class Token {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

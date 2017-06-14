@@ -47,7 +47,8 @@ public class RegistrationController {
         gymRepository.save(gym);
         Token token = new Token();
         token.setToken(utils.getToken(client.getClientEmail(), client.getClientId()));
-
+        token.setState("Client");
+        token.setId(client.getClientId());
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
@@ -61,7 +62,8 @@ public class RegistrationController {
         gymRepository.save(gym);
         Token token = new Token();
         token.setToken(utils.getToken(gym.getGymLogin(), gym.getGymId()));
-
+        token.setId(gym.getGymId());
+        token.setState("Gym");
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 }
