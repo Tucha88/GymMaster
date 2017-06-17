@@ -27,24 +27,22 @@ public class ClientController {
         this.gymRepository = gymRepository;
     }
 
-
     @GetMapping("client")
     public ResponseEntity<Object> getClient(@RequestParam("id") String client) {
         Client client1 = clientRepository.findOne(client);
         if (client1 == null) {
-            return new ResponseEntity<Object>("Ther is no client by this id", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("There is no client by this id", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<Object>(client1, HttpStatus.OK);
+        return new ResponseEntity<>(client1, HttpStatus.OK);
     }
-//    @PutMapping("client")
-//    public ResponseEntity<Object> editClient(@RequestParam("id") String client,@RequestBody Client client2){
-//
-//        Client client1 = clientRepository.findOne(client);
-//        if (client1 == null){
-//            return new ResponseEntity<Object>("Ther is no client by this id",HttpStatus.CONFLICT);
-//        }
-//        client1.set
-//        return new ResponseEntity<Object>(client1,HttpStatus.OK);
-//    }
+
+    @GetMapping("exercises")
+    public ResponseEntity<Object> getExercises(@RequestParam("id") String client) {
+        Client client1 = clientRepository.findOne(client);
+        if (client1 == null) {
+            return new ResponseEntity<>("there no such client", HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(client1.getExerciseToClients(), HttpStatus.OK);
+    }
 
 }
