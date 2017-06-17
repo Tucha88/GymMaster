@@ -55,15 +55,15 @@ public class GymController {
         String s = gymId;
         Client client = clientRepository.findOne(add.getClientId());
 
-        if (!client.getGymId().equals(gymId)) {
-            return new ResponseEntity<Object>("this is not your client", HttpStatus.CONFLICT);
-        }
+
         if (client == null) {
             return new ResponseEntity<>("Client not found", HttpStatus.CONFLICT);
         }
-        for (int i = 0; i < add.getExercise().size(); i++) {
-            client.addExercise(add.getExercise().get(i));
+        if (!client.getGymId().equals(gymId)) {
+            return new ResponseEntity<Object>("this is not your client", HttpStatus.CONFLICT);
         }
+        client.addToArray(add);
+
 
         clientRepository.save(client);
         return new ResponseEntity<>(HttpStatus.OK);

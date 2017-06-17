@@ -25,13 +25,16 @@ public class Client implements Serializable {
     private String gender;
     private Date regDate;
     private String gymId;
+    private ArrayList<ArrayExerciseToClient> exerciseToClients = new ArrayList<>();
     private ArrayList<Exercise> personalExercises = new ArrayList<>();
 
     public Client() {
     }
 
-    public Client(String clientId, String clientEmail, String clientPassword, Date clientBDay,
-                  String clientPhoto, String clientPhoneNumber, String gender, Date regDate, String gymId) {
+    public Client(String clientId, String clientEmail, String clientPassword,
+                  Date clientBDay, String clientPhoto, String clientPhoneNumber,
+                  String gender, Date regDate, String gymId,
+                  ArrayList<ArrayExerciseToClient> exerciseToClients, ArrayList<Exercise> personalExercises) {
         this.clientId = clientId;
         this.clientEmail = clientEmail;
         this.clientPassword = clientPassword;
@@ -41,8 +44,21 @@ public class Client implements Serializable {
         this.gender = gender;
         this.regDate = regDate;
         this.gymId = gymId;
+        this.exerciseToClients = exerciseToClients;
+        this.personalExercises = personalExercises;
     }
 
+    public void addToArray(ArrayExerciseToClient arrayExerciseToClient) {
+        exerciseToClients.add(arrayExerciseToClient);
+    }
+
+    public ArrayList<ArrayExerciseToClient> getExerciseToClients() {
+        return exerciseToClients;
+    }
+
+    public void setExerciseToClients(ArrayList<ArrayExerciseToClient> exerciseToClients) {
+        this.exerciseToClients = exerciseToClients;
+    }
 
     public String getClientId() {
 
