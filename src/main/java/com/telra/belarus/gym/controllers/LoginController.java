@@ -40,6 +40,8 @@ public class LoginController {
             }
             Token tokenAndBoolean = new Token();
             tokenAndBoolean.setToken(utils.getToken(client.getClientEmail(), client.getClientId()));
+            tokenAndBoolean.setId(client.getClientId());
+            tokenAndBoolean.setState("Client");
             return new ResponseEntity<>(tokenAndBoolean, HttpStatus.OK);
         }
         if (gymRepository.findGymByGymLogin(authType.getEmial()) != null) {
