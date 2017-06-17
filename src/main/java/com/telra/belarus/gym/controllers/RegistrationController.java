@@ -38,7 +38,7 @@ public class RegistrationController {
         }
         Gym gym = gymRepository.findGymByGymId(client.getGymId());
         if (gym == null){
-            return new ResponseEntity<Object>("Error",HttpStatus.CONFLICT);
+            return new ResponseEntity<Object>("Enter valid gym", HttpStatus.CONFLICT);
         }
 //        String str = utils.hashPassword(client.getClientPassword());
 //        client.setClientPassword(str);
@@ -54,8 +54,16 @@ public class RegistrationController {
 
     @PostMapping("gym")
     public ResponseEntity<Object> registerGym(@RequestBody Gym gym) {
+        if (gym.getGymLogin() == null || gym.getGymPassword() == null) {
+            return new ResponseEntity<Object>("enter valid credentials", HttpStatus.CONFLICT);
+        }
          if (gymRepository.findGymByGymLogin(gym.getGymLogin()) != null) {
             return new ResponseEntity<>("This user already exists", HttpStatus.CONFLICT); // Found same login
+        }
+
+        if (gym.getGymLogin().equals("") || gym.getGymPassword().equals("")) {
+
+            return new ResponseEntity<Object>("enter valid credentials", HttpStatus.CONFLICT);
         }
         String str = utils.hashPassword(gym.getGymPassword());
         gym.setGymPassword(str);

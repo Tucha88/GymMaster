@@ -1,6 +1,8 @@
 package com.telra.belarus.gym.controllers;
 
+import com.telra.belarus.gym.models.AuthType;
 import com.telra.belarus.gym.models.Client;
+import com.telra.belarus.gym.models.Gym;
 import com.telra.belarus.gym.models.Token;
 import com.telra.belarus.gym.repository.ClientRepository;
 import com.telra.belarus.gym.repository.GymRepository;
@@ -28,21 +30,33 @@ public class LoginController {
         this.gymRepository = gymRepository;
 
     }
+
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody Client authType){
-        if (utils.isLoginInfoExist(authType)) {
-            return new ResponseEntity<>("Error, there is no auth info", HttpStatus.UNAUTHORIZED);
-        } else if (clientRepository.findClientByClientEmail(authType.getClientEmail()) != null) {
-            Client client = clientRepository.findClientByClientEmail(authType.getClientEmail());
-            if (!utils.isPasswordCorrect(authType.getClientPassword(), client.getClientPassword())) {
+    public ResponseEntity<Object> login(@RequestBody AuthType authType) {
+        if (clientRepository.findClientByClientEmail(authType.getEmial()) != null) {
+            Client client = clientRepository.findClientByClientEmail(authType.getEmial());
+            if (!utils.isPasswordCorrect(authType.getPassword(), client.getClientPassword())) {
                 return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
             Token tokenAndBoolean = new Token();
             tokenAndBoolean.setToken(utils.getToken(client.getClientEmail(), client.getClientId()));
             return new ResponseEntity<>(tokenAndBoolean, HttpStatus.OK);
+        }
+        if (gymRepository.findGymByGymLogin(authType.getEmial()) != null) {
+            Gym gym = gymRepository.findGymByGymLogin(authType.getEmial());
+
+            if (gym.getGymPassword().equals(authType.getPassword())) {
+                Token tokent = new Token();
+                tokent.setToken(utils.getToken(gym.getGymLogin(), gym.getGymId()));
+                tokent.setId(gym.getGymId());
+                tokent.setState("Gym");
+                return new ResponseEntity<Object>(tokent, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Object>("wrong password", HttpStatus.CONFLICT);
+            }
 
         }
-        return new ResponseEntity<>("Please register",HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>("Please register", HttpStatus.UNAUTHORIZED);
     }
 
 }

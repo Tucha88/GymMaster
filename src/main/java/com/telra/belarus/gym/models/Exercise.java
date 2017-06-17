@@ -1,5 +1,6 @@
 package com.telra.belarus.gym.models;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -11,19 +12,22 @@ import java.util.ArrayList;
 public class Exercise {
     private static final long serialVersionUID = -123456781L;
 
+    @Id
+    private String exerciseId;
     private String categoryName;
     private String exerciseName;
     private String title;
     private String description;
-    private ArrayList<String> photo;
+    private ArrayList<String> photo = new ArrayList<>();
     private String video;
 
     public Exercise() {
     }
 
-    public Exercise(String categoryName, String exerciseName, String title,
+    public Exercise(String exerciseId, String categoryName, String exerciseName, String title,
                     String description, ArrayList<String> photo, String video) {
 
+        this.exerciseId = exerciseId;
         this.categoryName = categoryName;
         this.exerciseName = exerciseName;
         this.title = title;
@@ -31,6 +35,7 @@ public class Exercise {
         this.photo = photo;
         this.video = video;
     }
+
 
 
     public String getCategoryName() {
@@ -79,5 +84,13 @@ public class Exercise {
 
     public void setVideo(String video) {
         this.video = video;
+    }
+
+    public String getExerciseId() {
+        return exerciseId;
+    }
+
+    public void setExerciseId(String exerciseId) {
+        this.exerciseId = exerciseId;
     }
 }
