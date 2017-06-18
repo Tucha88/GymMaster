@@ -82,10 +82,17 @@ public class GymController {
     @GetMapping("getallclients")
     public ResponseEntity<Object> getAllClients(@RequestParam("id") String id) {
         Gym gym = gymRepository.findOne(id);
+        ArrayList<Client> clients = (ArrayList) clientRepository.findAll();
         if (gym == null) {
             return new ResponseEntity<>("Gym not found, register please", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(gym.getClients(), HttpStatus.OK);
+        ArrayList<Client> gymClients = new ArrayList<>();
+        for (int i = 0; i < clients.size(); i++) {
+            if (clients.get(i).getGymId().equals(gym.getGymId())) {
+                gymClients.add(clients.get(i));
+            }
+        }
+        return new ResponseEntity<>(gymClients, HttpStatus.OK);
     }
 
     @GetMapping("getallgyms")
