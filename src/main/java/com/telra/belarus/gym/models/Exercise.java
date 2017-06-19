@@ -18,25 +18,36 @@ public class Exercise {
     private String exerciseName;
     private String title;
     private String description;
+    private int reps;
+    private int sets;
+    private int duration;
     private ArrayList<String> photo = new ArrayList<>();
     private String video;
 
     public Exercise() {
     }
 
-    public Exercise(String exerciseId, String categoryName, String exerciseName, String title,
-                    String description, ArrayList<String> photo, String video) {
-
+    public Exercise(String exerciseId, String categoryName, String exerciseName, String title, String description, int reps, int sets, int duration, ArrayList<String> photo, String video) {
         this.exerciseId = exerciseId;
         this.categoryName = categoryName;
         this.exerciseName = exerciseName;
         this.title = title;
         this.description = description;
+        this.reps = reps;
+        this.sets = sets;
+        this.duration = duration;
         this.photo = photo;
         this.video = video;
     }
 
+    public String getExerciseId() {
 
+        return exerciseId;
+    }
+
+    public void setExerciseId(String exerciseId) {
+        this.exerciseId = exerciseId;
+    }
 
     public String getCategoryName() {
         return categoryName;
@@ -70,6 +81,30 @@ public class Exercise {
         this.description = description;
     }
 
+    public int getReps() {
+        return reps;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
+    public int getSets() {
+        return sets;
+    }
+
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
     public ArrayList<String> getPhoto() {
         return photo;
     }
@@ -84,13 +119,5 @@ public class Exercise {
 
     public void setVideo(String video) {
         this.video = video;
-    }
-
-    public String getExerciseId() {
-        return exerciseId;
-    }
-
-    public void setExerciseId(String exerciseId) {
-        this.exerciseId = exerciseId;
     }
 }
