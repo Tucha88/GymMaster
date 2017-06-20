@@ -47,12 +47,12 @@ public class LoginController {
         if (gymRepository.findGymByGymLogin(authType.getEmial()) != null) {
             Gym gym = gymRepository.findGymByGymLogin(authType.getEmial());
 
-            if (gym.getGymPassword().equals(authType.getPassword())) {
+            if (utils.isPasswordCorrect(authType.getPassword(), gym.getGymPassword())) {
                 Token tokent = new Token();
                 tokent.setToken(utils.getToken(gym.getGymLogin(), gym.getGymId()));
                 tokent.setId(gym.getGymId());
                 tokent.setState("Gym");
-                return new ResponseEntity<Object>(tokent, HttpStatus.OK);
+                return new ResponseEntity<>(tokent, HttpStatus.OK);
             } else {
                 return new ResponseEntity<Object>("wrong password", HttpStatus.CONFLICT);
             }
