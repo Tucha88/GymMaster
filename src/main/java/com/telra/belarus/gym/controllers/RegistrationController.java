@@ -42,6 +42,8 @@ public class RegistrationController {
         }
 //        String str = utils.hashPassword(client.getClientPassword());
 //        client.setClientPassword(str);
+        String str = utils.hashPassword(client.getClientPassword());
+        client.setClientPassword(str);
         clientRepository.save(client);
         gym.addClient(client.getClientId());
         gymRepository.save(gym);
