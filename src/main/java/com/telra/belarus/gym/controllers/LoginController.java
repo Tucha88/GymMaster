@@ -33,8 +33,8 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody AuthType authType) {
-        if (clientRepository.findClientByClientEmail(authType.getEmial()) != null) {
-            Client client = clientRepository.findClientByClientEmail(authType.getEmial());
+        if (clientRepository.findClientByClientEmail(authType.getEmail()) != null) {
+            Client client = clientRepository.findClientByClientEmail(authType.getEmail());
             if (!utils.isPasswordCorrect(authType.getPassword(), client.getClientPassword())) {
                 return new ResponseEntity<>("Wrong password", HttpStatus.UNAUTHORIZED);
             }
@@ -44,8 +44,8 @@ public class LoginController {
             tokenAndBoolean.setState("Client");
             return new ResponseEntity<>(tokenAndBoolean, HttpStatus.OK);
         }
-        if (gymRepository.findGymByGymLogin(authType.getEmial()) != null) {
-            Gym gym = gymRepository.findGymByGymLogin(authType.getEmial());
+        if (gymRepository.findGymByGymLogin(authType.getEmail()) != null) {
+            Gym gym = gymRepository.findGymByGymLogin(authType.getEmail());
 
             if (utils.isPasswordCorrect(authType.getPassword(), gym.getGymPassword())) {
                 Token tokent = new Token();

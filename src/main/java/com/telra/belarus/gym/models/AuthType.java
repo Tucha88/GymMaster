@@ -4,23 +4,24 @@ package com.telra.belarus.gym.models;
  * Created by Boris on 12.06.2017.
  */
 public class AuthType {
-    private String emial;
+    private String email;
     private String password;
 
     public AuthType() {
     }
 
-    public AuthType(String emial, String password) {
-        this.emial = emial;
+    public AuthType(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getEmial() {
-        return emial;
+    public String getEmail() {
+
+        return email;
     }
 
-    public void setEmial(String emial) {
-        this.emial = emial;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
