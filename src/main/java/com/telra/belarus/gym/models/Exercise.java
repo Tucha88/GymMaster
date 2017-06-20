@@ -18,16 +18,16 @@ public class Exercise {
     private String exerciseName;
     private String title;
     private String description;
-    private int reps;
-    private int sets;
-    private int duration;
+    private String reps;
+    private String sets;
+    private String duration;
     private ArrayList<String> photo = new ArrayList<>();
     private String video;
 
     public Exercise() {
     }
 
-    public Exercise(String exerciseId, String categoryName, String exerciseName, String title, String description, int reps, int sets, int duration, ArrayList<String> photo, String video) {
+    public Exercise(String exerciseId, String categoryName, String exerciseName, String title, String description, String reps, String sets, String duration, ArrayList<String> photo, String video) {
         this.exerciseId = exerciseId;
         this.categoryName = categoryName;
         this.exerciseName = exerciseName;
@@ -81,27 +81,27 @@ public class Exercise {
         this.description = description;
     }
 
-    public int getReps() {
+    public String getReps() {
         return reps;
     }
 
-    public void setReps(int reps) {
+    public void setReps(String reps) {
         this.reps = reps;
     }
 
-    public int getSets() {
+    public String getSets() {
         return sets;
     }
 
-    public void setSets(int sets) {
+    public void setSets(String sets) {
         this.sets = sets;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
